@@ -38,6 +38,21 @@ export async function signIn(formData: FormData) {
   redirect("/app");
 }
 
+export async function sendMagicLink(formData: FormData) {
+  const supabase = await createSupabaseServerClient();
+  const email = requireText(formData, "email");
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo: `${siteUrl}/auth/callback`,
+      shouldCreateUser: true
+    }
+  });
+  if (error) throw error;
+  redirect(`/login?sent=1&email=${encodeURIComponent(email)}`);
+}
+
 export async function signOut() {
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
