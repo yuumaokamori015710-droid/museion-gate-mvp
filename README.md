@@ -51,6 +51,29 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 4. Redirect URLs に `http://localhost:3000/auth/callback` を追加します。
 5. `.env.local` にProject URLとanon keyを設定します。
 
+Magic Linkログインを本番で使う場合は、Vercelの本番URLも追加してください。
+
+```text
+Site URL: https://your-vercel-domain.vercel.app
+Redirect URLs:
+- http://localhost:3000/auth/callback
+- https://your-vercel-domain.vercel.app/auth/callback
+```
+
+## Vercelデプロイ
+
+VercelでGitHubリポジトリ `yuumaokamori015710-droid/museion-gate-mvp` をImportします。
+
+Environment Variablesに以下を設定してください。
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+NEXT_PUBLIC_SITE_URL=https://your-vercel-domain.vercel.app
+```
+
+Deploy後、Supabase側のSite URLとRedirect URLsをVercelの本番URLに合わせます。
+
 ## 管理者ユーザーの作り方
 
 1. `/login` からユーザー登録します。
@@ -68,7 +91,8 @@ where email = 'admin@example.com';
 ## 実装済み機能
 
 - LP
-- メール登録、ログイン、ログアウト
+- Magic Linkログイン
+- メール登録、パスワードログイン、ログアウト
 - Gate Application
 - pending / approved / rejected / suspended のステータス制御
 - 承認済みメンバー向けアプリレイアウト
