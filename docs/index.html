@@ -1,0 +1,149 @@
+﻿<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MUSEION Gate</title>
+    <style>
+      :root {
+        --ink: #111318;
+        --navy: #101a2c;
+        --smoke: #f4f2ee;
+        --line: #dfddd8;
+        --gold: #a98952;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, "Noto Sans JP", system-ui, sans-serif;
+        color: var(--ink);
+        background: var(--smoke);
+      }
+      a { color: inherit; text-decoration: none; }
+      .hero {
+        min-height: 92vh;
+        color: white;
+        background:
+          radial-gradient(circle at 24% 18%, rgba(168,137,82,.22), transparent 30%),
+          linear-gradient(135deg, #0d1422 0%, #172236 48%, #0b0d12 100%);
+        display: grid;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 120px;
+        background: linear-gradient(to top, var(--smoke), transparent);
+      }
+      .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; position: relative; z-index: 1; }
+      .brand { letter-spacing: .28em; font-size: 13px; font-weight: 700; opacity: .72; }
+      h1 { font-family: Georgia, "Yu Mincho", serif; font-size: clamp(48px, 8vw, 88px); line-height: 1.08; margin: 20px 0 0; max-width: 860px; }
+      .lead { max-width: 690px; margin-top: 28px; font-size: 18px; line-height: 1.9; color: rgba(255,255,255,.78); }
+      .sub { max-width: 690px; margin-top: 16px; font-size: 14px; line-height: 1.9; color: rgba(255,255,255,.58); }
+      .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+      .btn { border-radius: 6px; padding: 12px 18px; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; min-height: 44px; }
+      .primary { background: white; color: var(--ink); }
+      .secondary { border: 1px solid rgba(255,255,255,.28); background: rgba(255,255,255,.08); color: white; }
+      section { padding: 72px 0; }
+      .two { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: center; }
+      .eyebrow { color: var(--gold); font-size: 13px; font-weight: 800; margin: 0 0 10px; }
+      h2 { font-size: clamp(28px, 4vw, 42px); line-height: 1.25; margin: 0; }
+      p { line-height: 1.9; }
+      .muted { color: rgba(17,19,24,.68); font-size: 14px; }
+      .band { background: white; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+      .card { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 22px; box-shadow: 0 18px 50px rgba(17,19,24,.06); }
+      .card h3 { margin: 0; font-size: 17px; }
+      .card p { margin: 12px 0 0; font-size: 13px; color: rgba(17,19,24,.64); }
+      .steps { display: grid; gap: 14px; margin-top: 28px; }
+      .step { display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line); padding-bottom: 16px; font-weight: 800; }
+      .num { width: 36px; height: 36px; border-radius: 999px; background: var(--navy); color: white; display: grid; place-items: center; font-size: 14px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+      .chip { border: 1px solid var(--line); background: white; border-radius: 999px; padding: 10px 14px; font-size: 13px; font-weight: 700; }
+      .cta { background: #0d1422; color: white; }
+      .cta .muted { color: rgba(255,255,255,.7); }
+      @media (max-width: 800px) {
+        .two, .grid { grid-template-columns: 1fr; }
+        section { padding: 54px 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="hero">
+        <div class="wrap">
+          <div class="brand">MUSEION Gate</div>
+          <h1>知性が、次に動く入口。</h1>
+          <p class="lead">キャリア、起業、副業、投資、学び。ハイポテンシャル層の意思決定が見える、審査制コミュニティ。</p>
+          <p class="sub">肩書きではなく、何を考え、どこへ向かうのか。その意思決定こそが、ここでの価値になります。</p>
+          <div class="actions">
+            <a class="btn primary" href="#gate">Gateに申請する</a>
+            <a class="btn secondary" href="#concept">仕組みを見る</a>
+          </div>
+        </div>
+      </div>
+      <section id="concept">
+        <div class="wrap two">
+          <div>
+            <p class="eyebrow">Concept</p>
+            <h2>現代のムセイオンへ。</h2>
+          </div>
+          <p class="muted">MUSEION Gateは、知性と探究が集まる閉じた場です。学歴や年収は審査要素の一部に留め、実績、探究心、貢献可能性、そして次の一手を重視します。</p>
+        </div>
+      </section>
+      <section class="band">
+        <div class="wrap">
+          <p class="eyebrow">Value</p>
+          <h2>クローズドな信頼が、思考の深度を上げる。</h2>
+          <div class="grid">
+            <div class="card"><h3>次の一手が見える</h3><p>キャリア、起業、副業、投資、学びの意思決定ログに触れられます。</p></div>
+            <div class="card"><h3>本音の思考に触れる</h3><p>表向きの成功談ではなく、迷いと判断のプロセスを共有します。</p></div>
+            <div class="card"><h3>探究と実践がつながる</h3><p>次に向かう方向が近い人と、静かで濃い接点を持てます。</p></div>
+            <div class="card"><h3>審査制で信頼を保つ</h3><p>知性、実績、探究心、貢献可能性をもとに場の密度を守ります。</p></div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="wrap two">
+          <div>
+            <p class="eyebrow">How it works</p>
+            <h2>Gateを通り、知的社交場へ。</h2>
+            <div class="steps">
+              <div class="step"><span class="num">1</span>Gate申請</div>
+              <div class="step"><span class="num">2</span>審査</div>
+              <div class="step"><span class="num">3</span>承認</div>
+              <div class="step"><span class="num">4</span>Agora / Stoa / Symposiaに参加</div>
+            </div>
+          </div>
+          <div>
+            <p class="eyebrow">Community</p>
+            <h2>誰が集まるのか。</h2>
+            <p class="muted">MUSEION Gateには、学び続け、次に動こうとする人たちが集まります。</p>
+            <div class="chips">
+              <span class="chip">難関大学の学生・大学院生</span>
+              <span class="chip">若手プロフェッショナル</span>
+              <span class="chip">外資・コンサル・金融・商社</span>
+              <span class="chip">起業家・起業志向者</span>
+              <span class="chip">専門職</span>
+              <span class="chip">海外MBA志望者</span>
+              <span class="chip">AI・スタートアップ・投資関心層</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="gate" class="cta">
+        <div class="wrap two">
+          <div>
+            <p class="eyebrow">Gate</p>
+            <h2>Gateの先へ。</h2>
+            <p class="muted">次に何を考え、どこへ動くのか。MUSEION Gateで、あなたの次の一手を見つけてください。</p>
+          </div>
+          <div><a class="btn primary" href="#gate">Gateに申請する</a></div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
