@@ -19,6 +19,9 @@ type Application = {
   company: string | null;
   university: string | null;
   job_title: string | null;
+  income_range: string | null;
+  social_links: Record<string, string> | null;
+  bio: string | null;
   interests: string[] | null;
   purpose: string | null;
 };
@@ -64,7 +67,10 @@ export default async function AdminPage() {
         <div className="mt-8 grid gap-6">
           <Card>
             <h2 className="text-xl font-bold">Gate申請一覧</h2>
-            <p className="mt-2 text-sm text-ink/60">Review Noteを確認し、知性、実績、探究心、貢献可能性をもとに審査します。</p>
+            <p className="mt-2 text-sm text-ink/60">
+              本人性、学びの軌跡、職業・制作・研究実績、探究テーマ、貢献可能性をもとに審査します。
+              学歴や収入は参考情報であり、表側には出しません。
+            </p>
             <div className="mt-5 grid gap-4">
               {(applications as Application[] | null)?.map((app) => (
                 <div key={app.id} className="rounded-md border border-line bg-smoke p-4">
@@ -74,9 +80,17 @@ export default async function AdminPage() {
                         <h3 className="font-bold">{app.display_name} / {app.full_name}</h3>
                         <StatusBadge status={app.status} />
                       </div>
-                      <p className="mt-2 text-sm text-ink/65">{app.email} / {app.user_type} / {app.company || app.university} / {app.job_title}</p>
+                      <p className="mt-2 text-sm text-ink/65">{app.email} / {app.user_type}</p>
+                      <div className="mt-3 grid gap-2 text-sm text-ink/65 md:grid-cols-2">
+                        <p><span className="font-semibold text-ink">学び:</span> {app.university || "未入力"}</p>
+                        <p><span className="font-semibold text-ink">所属:</span> {app.company || "未入力"}</p>
+                        <p><span className="font-semibold text-ink">役割:</span> {app.job_title || "未入力"}</p>
+                        <p><span className="font-semibold text-ink">経済的実績:</span> {app.income_range || "未回答"}</p>
+                        <p className="md:col-span-2"><span className="font-semibold text-ink">確認URL:</span> {app.social_links?.url || "未入力"}</p>
+                      </div>
                       <p className="mt-2 text-sm text-ink/65">関心: {(app.interests || []).join(", ")}</p>
-                      <p className="mt-3 text-sm leading-6 text-ink/70">Review Note: {app.purpose}</p>
+                      <p className="mt-3 text-sm leading-6 text-ink/70">実績・制作・研究: {app.bio}</p>
+                      <p className="mt-3 text-sm leading-6 text-ink/70">問い / 次の一手: {app.purpose}</p>
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {["approved", "rejected", "suspended"].map((status) => (

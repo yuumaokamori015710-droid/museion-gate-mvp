@@ -35,11 +35,16 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
           <p className="text-sm font-semibold text-gold">Gate Application</p>
           <h1 className="mt-2 text-4xl font-bold">Gate申請</h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-ink/65">
-            MUSEION Gateは審査制コミュニティです。あなたの現在地、関心領域、次に向かいたい方向をもとに審査を行います。
+            MUSEION Gateは、知性、探究心、実績、次の一手をもとに信頼を保つ審査制コミュニティです。
+            学歴や収入は参考情報の一部として扱い、公開プロフィールには出しません。
           </p>
         </div>
         <Card className="mt-8">
           <form action={submitApplication} className="grid gap-5">
+            <div className="rounded-md border border-gold/25 bg-gold/10 p-4 text-sm leading-7 text-ink/75">
+              <span className="font-bold text-ink">審査で見るもの:</span> 本人性、学びの軌跡、職業・制作・研究などの実績、
+              深く考えている問い、そしてコミュニティへ持ち込める視点です。
+            </div>
             <div className="grid gap-4 md:grid-cols-2">
               <Field label="氏名"><input className={inputClass} name="full_name" defaultValue={profile?.full_name || ""} required /></Field>
               <Field label="表示名"><input className={inputClass} name="display_name" defaultValue={profile?.display_name || user?.user_metadata?.display_name || ""} required /></Field>
@@ -49,10 +54,10 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
                   {userTypes.map((item) => <option key={item}>{item}</option>)}
                 </select>
               </Field>
-              <Field label="大学名"><input className={inputClass} name="university" defaultValue={profile?.university || ""} /></Field>
-              <Field label="勤務先"><input className={inputClass} name="company" defaultValue={profile?.company || ""} /></Field>
-              <Field label="職種"><input className={inputClass} name="job_title" defaultValue={profile?.job_title || ""} /></Field>
-              <Field label="年収レンジ">
+              <Field label="学びの所属・卒業校"><input className={inputClass} name="university" defaultValue={profile?.university || ""} placeholder="大学、大学院、研究機関など" /></Field>
+              <Field label="現在の所属"><input className={inputClass} name="company" defaultValue={profile?.company || ""} placeholder="勤務先、事業名、所属組織など" /></Field>
+              <Field label="役割・専門領域"><input className={inputClass} name="job_title" defaultValue={profile?.job_title || ""} placeholder="職種、役職、研究領域など" /></Field>
+              <Field label="経済的実績の参考情報">
                 <select className={inputClass} name="income_range" defaultValue={profile?.income_range || "未回答"}>
                   {incomeRanges.map((item) => <option key={item}>{item}</option>)}
                 </select>
@@ -69,11 +74,11 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
                 ))}
               </div>
             </div>
-            <Field label="自己紹介"><textarea className={inputClass} name="bio" rows={4} defaultValue={profile?.bio || ""} required /></Field>
-            <Field label="次に向かいたい方向"><textarea className={inputClass} name="purpose" rows={4} defaultValue={profile?.purpose || ""} required /></Field>
+            <Field label="これまでの実績・制作・研究・意思決定"><textarea className={inputClass} name="bio" rows={4} defaultValue={profile?.bio || ""} required /></Field>
+            <Field label="いま深く考えている問い / 次の一手"><textarea className={inputClass} name="purpose" rows={4} defaultValue={profile?.purpose || ""} required /></Field>
             <div className="grid gap-4 md:grid-cols-2">
               <Field label="招待コード"><input className={inputClass} name="invitation_code" defaultValue={profile?.invitation_code || ""} /></Field>
-              <Field label="LinkedIn / Wantedly / X / ポートフォリオURL"><input className={inputClass} name="social_url" type="url" placeholder="https://" /></Field>
+              <Field label="実績確認URL"><input className={inputClass} name="social_url" type="url" placeholder="LinkedIn / Wantedly / researchmap / GitHub / ポートフォリオ" /></Field>
             </div>
             <label className="flex items-start gap-3 text-sm text-ink/70">
               <input className="mt-1" type="checkbox" required />

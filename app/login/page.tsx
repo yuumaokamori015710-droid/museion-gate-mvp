@@ -42,7 +42,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <Card className="bg-navy text-white">
               <h2 className="text-2xl font-bold">初めての方へ</h2>
               <p className="mt-2 text-sm leading-7 text-white/70">
-                メールリンクで入った後、Gate申請に進みます。学歴や年収だけでなく、探究心・実績・次の一手をもとに審査します。
+                メールリンクで入った後、Gate申請に進みます。学びの軌跡、実績、探究心、次の一手をもとに審査します。
+                学歴や収入は参考情報として扱い、表側には出しません。
               </p>
             </Card>
 

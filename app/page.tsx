@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Card, Section } from "@/components/ui/card";
 
 const values = [
-  ["優秀層の次の一手が見える", "キャリア、起業、副業、投資、学びの意思決定ログに触れられます。", Eye],
+  ["次の一手が見える", "キャリア、起業、副業、投資、学びの意思決定ログに触れられます。", Eye],
   ["本音のキャリア意思決定に触れられる", "表向きの成功談ではなく、迷いと判断のプロセスを共有します。", Brain],
   ["探究と実践の仲間につながる", "次に向かう方向が近い人と、静かで濃い接点を持てます。", Users],
   ["審査制だからノイズが少ない", "知性、実績、探究心、貢献可能性をもとに信頼を保ちます。", ShieldCheck]
@@ -12,13 +12,13 @@ const values = [
 const steps = ["Gate申請", "審査", "承認", "Agora / Stoa / Symposiaへの参加"];
 
 const community = [
-  "難関大学の学生・大学院生",
-  "若手プロフェッショナル",
-  "外資コンサル・金融・商社・メガベンチャー出身者",
-  "起業家・起業志向者",
-  "専門職",
-  "海外MBA志望者",
-  "AI・スタートアップ・投資に関心のある人"
+  "学び続ける学生・大学院生",
+  "次の一手を考えるプロフェッショナル",
+  "事業・研究・制作の実績を持つ人",
+  "起業家・起業準備者",
+  "専門性を深める実践者",
+  "海外MBA・留学を検討する人",
+  "AI・スタートアップ・投資を探究する人"
 ];
 
 export default function LandingPage() {
@@ -31,10 +31,10 @@ export default function LandingPage() {
           <p className="mb-5 text-sm font-semibold tracking-[0.28em] text-white/70">MUSEION Gate</p>
           <h1 className="max-w-4xl font-serif text-5xl leading-tight md:text-7xl">知性が、次に動く入口。</h1>
           <p className="mt-6 max-w-2xl text-base leading-8 text-white/78 md:text-lg">
-            キャリア、起業、副業、投資、学び。ハイポテンシャル層の意思決定が見える、審査制コミュニティ。
+            キャリア、起業、副業、投資、学び。知性と実績を持つ人の意思決定が見える、審査制コミュニティ。
           </p>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-white/58">
-            肩書きではなく、何を考え、どこへ向かうのか。その意思決定こそが、ここでの価値になります。
+            肩書きや数字だけではなく、何を考え、どこへ向かうのか。その意思決定こそが、ここでの価値になります。
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <ButtonLink href="/apply" className="bg-white text-ink hover:bg-smoke">
@@ -95,7 +95,10 @@ export default function LandingPage() {
         <div>
           <p className="text-sm font-semibold text-gold">Community</p>
           <h2 className="mt-2 text-3xl font-bold">誰が集まるのか</h2>
-          <p className="mt-4 text-sm leading-7 text-ink/65">MUSEION Gateには、学び続け、次に動こうとする人たちが集まります。</p>
+          <p className="mt-4 text-sm leading-7 text-ink/65">
+            MUSEION Gateには、知性、探究心、実績、次の一手を持ち寄れる人たちが集まります。
+            学歴や収入は審査要素の一部に留め、表側では信頼と貢献の文脈で扱います。
+          </p>
           <div className="mt-6 flex flex-wrap gap-3">
             {community.map((member) => (
               <span key={member} className="rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold">
