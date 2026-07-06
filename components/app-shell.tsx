@@ -17,7 +17,7 @@ export function AppShell({ profile, children }: { profile: Profile; children: Re
 
   return (
     <div className="min-h-screen bg-smoke text-ink">
-      <aside className="fixed left-0 top-0 hidden h-screen w-64 border-r border-line bg-white px-4 py-6 md:block">
+      <aside className="fixed left-0 top-0 hidden h-screen w-64 border-r border-line bg-[#fffaf2] px-4 py-6 md:block">
         <Link href="/app" className="block text-lg font-black tracking-[0.16em] text-navy">
           MUSEION Gate
         </Link>
@@ -46,7 +46,7 @@ export function AppShell({ profile, children }: { profile: Profile; children: Re
         </div>
       </aside>
       <main className="pb-24 md:ml-64 md:pb-0">{children}</main>
-      <nav className="fixed bottom-0 left-0 right-0 z-20 grid grid-cols-5 border-t border-line bg-white md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-20 grid grid-cols-5 border-t border-line bg-[#fffaf2] md:hidden">
         {items.slice(0, 5).map((item) => (
           <Link key={item.href} href={item.href} className="grid justify-items-center gap-1 px-1 py-2 text-[11px] font-semibold text-ink/70">
             <item.icon size={18} />

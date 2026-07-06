@@ -93,7 +93,7 @@ Deploy後、Supabase側のSite URLとRedirect URLsをVercelの本番URLに合わ
 ## 管理者ユーザーの作り方
 
 1. `/login` からユーザー登録します。
-2. `/apply` からGate申請します。
+2. `/apply` から新規登録します。
 3. Supabase SQL Editorで対象ユーザーをAdminかつ承認済みにします。
 
 ```sql
@@ -102,14 +102,14 @@ set status = 'approved', is_admin = true
 where email = 'admin@example.com';
 ```
 
-以後、`/admin` からGate申請審査、メンバー管理、Agora管理、Symposia管理、通報確認ができます。
+以後、`/admin` から新規登録審査、メンバー管理、Agora管理、Symposia管理、通報確認ができます。
 
 ## 実装済み機能
 
 - LP
 - Magic Linkログイン
 - メール登録、パスワードログイン、ログアウト
-- Gate Application
+- 新規登録フロー
 - pending / approved / rejected / suspended のステータス制御
 - 承認済みメンバー向けアプリレイアウト
 - Home
@@ -137,12 +137,12 @@ where email = 'admin@example.com';
 
 1. 未ログインで `/` が表示されることを確認します。
 2. `/login` で登録します。
-3. `/apply` でGate申請します。
-4. `profiles.status = 'pending'` の状態で `/app` にアクセスし、Gate審査中画面へ移動することを確認します。
+3. `/apply` で新規登録します。
+4. `profiles.status = 'pending'` の状態で `/app` にアクセスし、登録審査中画面へ移動することを確認します。
 5. 管理者SQLで自分を `approved` にします。
 6. `/app`、`/app/feed`、`/app/rooms`、`/app/events`、`/app/profile` を確認します。
 7. 投稿、コメント、いいね、通報、イベント申込を試します。
-8. Adminで `/admin` にアクセスし、Gate申請審査・投稿非表示・Symposia作成を確認します。
+8. Adminで `/admin` にアクセスし、新規登録審査・投稿非表示・Symposia作成を確認します。
 
 ## 注意点
 
@@ -153,7 +153,7 @@ where email = 'admin@example.com';
 
 ## 今後の改善案
 
-- Gate申請詳細モーダルとReview Note
+- 新規登録審査詳細モーダルとReview Note
 - Symposia編集UIと申込者一覧
 - Stoa参加/お気に入り
 - Agora検索、タグ検索

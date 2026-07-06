@@ -7,8 +7,8 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const styles = {
   primary: "bg-navy text-white hover:bg-ink",
-  secondary: "bg-white text-ink border border-line hover:border-navy",
-  ghost: "bg-transparent text-ink hover:bg-white",
+  secondary: "bg-[#fffaf2] text-ink border border-line hover:border-navy",
+  ghost: "bg-transparent text-ink hover:bg-[#fffaf2]",
   danger: "bg-red-700 text-white hover:bg-red-800"
 };
 

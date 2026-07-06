@@ -15,7 +15,7 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
       <main className="grid min-h-screen place-items-center bg-smoke px-5">
         <Card className="max-w-xl text-center">
           <p className="text-sm font-semibold text-gold">Gate Application</p>
-          <h1 className="mt-3 text-3xl font-bold">Gate申請を受け付けました。</h1>
+          <h1 className="mt-3 text-3xl font-bold">新規登録を受け付けました。</h1>
           <p className="mt-4 text-sm leading-7 text-ink/65">審査完了までお待ちください。承認後、MUSEION Gateのコミュニティに参加できます。</p>
           <Link href="/login" className="mt-6 inline-flex rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white">
             ログインする
@@ -33,7 +33,7 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
         </Link>
         <div className="mt-8">
           <p className="text-sm font-semibold text-gold">Gate Application</p>
-          <h1 className="mt-2 text-4xl font-bold">Gate申請</h1>
+          <h1 className="mt-2 text-4xl font-bold">新規登録</h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-ink/65">
             MUSEION Gateは、知性、探究心、実績、次の一手をもとに信頼を保つ審査制コミュニティです。
             学歴や収入は参考情報の一部として扱い、公開プロフィールには出しません。
@@ -90,7 +90,7 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
               <input className="mt-1" type="checkbox" required />
               利用規約・プライバシーポリシーに同意します。
             </label>
-            <Button type="submit" className="w-full md:w-fit">Gateに申請する</Button>
+            <Button type="submit" className="w-full md:w-fit">新規登録する</Button>
           </form>
         </Card>
       </div>

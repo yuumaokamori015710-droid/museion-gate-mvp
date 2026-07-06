@@ -9,7 +9,7 @@ const values = [
   ["審査制だからノイズが少ない", "知性、実績、探究心、貢献可能性をもとに信頼を保ちます。", ShieldCheck]
 ];
 
-const steps = ["Gate申請", "審査", "承認", "Agora / Stoa / Symposiaへの参加"];
+const steps = ["新規登録", "審査", "承認", "Agora / Stoa / Symposiaへの参加"];
 
 const community = [
   "学び続ける学生・大学院生",
@@ -37,10 +37,10 @@ export default function LandingPage() {
             肩書きや数字だけではなく、何を考え、どこへ向かうのか。その意思決定こそが、ここでの価値になります。
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <ButtonLink href="/apply" className="bg-white text-ink hover:bg-smoke">
-              Gateに申請する <ArrowRight size={16} />
+            <ButtonLink href="/apply" className="bg-gold text-white shadow-lg shadow-black/20 hover:bg-[#856229]">
+              新規登録 <ArrowRight size={16} />
             </ButtonLink>
-            <ButtonLink href="/login" variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/15">
+            <ButtonLink href="/login" variant="secondary" className="border-white/35 bg-white/12 text-white hover:bg-white/20">
               ログインする
             </ButtonLink>
           </div>
@@ -58,7 +58,7 @@ export default function LandingPage() {
         </p>
       </Section>
 
-      <section className="border-y border-line bg-white">
+      <section className="border-y border-line bg-[#f6efe4]">
         <Section>
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
@@ -70,7 +70,7 @@ export default function LandingPage() {
           <div className="grid gap-4 md:grid-cols-4">
             {values.map(([title, body, Icon]) => (
               <Card key={String(title)} className="shadow-none">
-                <Icon className="mb-5 text-navy" size={24} />
+                <Icon className="mb-5 text-gold" size={24} />
                 <h3 className="font-bold">{title as string}</h3>
                 <p className="mt-3 text-sm leading-6 text-ink/65">{body as string}</p>
               </Card>
@@ -101,7 +101,7 @@ export default function LandingPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             {community.map((member) => (
-              <span key={member} className="rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold">
+              <span key={member} className="rounded-full border border-line bg-[#fffaf2] px-4 py-2 text-sm font-semibold">
                 {member}
               </span>
             ))}
@@ -118,8 +118,8 @@ export default function LandingPage() {
               次に何を考え、どこへ動くのか。MUSEION Gateで、あなたの次の一手を見つけてください。
             </p>
           </div>
-          <ButtonLink href="/apply" className="bg-white text-ink hover:bg-smoke">
-            <DoorOpen size={16} /> Gateに申請する
+          <ButtonLink href="/apply" className="bg-gold text-white shadow-lg shadow-black/20 hover:bg-[#856229]">
+            <DoorOpen size={16} /> 新規登録
           </ButtonLink>
         </Section>
       </section>

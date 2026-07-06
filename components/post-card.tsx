@@ -9,7 +9,7 @@ export function PostCard({ post }: { post: Post }) {
   const commentCount = post.comments?.[0]?.count ?? 0;
 
   return (
-    <article className="rounded-lg border border-line bg-white p-5 transition hover:border-navy">
+    <article className="rounded-lg border border-line bg-[#fffaf2] p-5 transition hover:border-navy">
       <Link href={`/app/feed/${post.id}`} className="grid gap-3">
         <div className="flex flex-wrap items-center gap-2 text-xs text-ink/60">
           <span className="rounded-full bg-smoke px-2 py-1 font-semibold text-navy">{post.category}</span>

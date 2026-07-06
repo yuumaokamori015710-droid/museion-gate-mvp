@@ -66,7 +66,7 @@ export default async function AdminPage() {
 
         <div className="mt-8 grid gap-6">
           <Card>
-            <h2 className="text-xl font-bold">Gate申請一覧</h2>
+            <h2 className="text-xl font-bold">新規登録審査一覧</h2>
             <p className="mt-2 text-sm text-ink/60">
               本人性、学びの軌跡、職業・制作・研究実績、探究テーマ、貢献可能性をもとに審査します。
               学歴や収入は参考情報であり、表側には出しません。

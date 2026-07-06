@@ -18,7 +18,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           MUSEION Gate
         </Link>
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-          <Card className="bg-white">
+          <Card>
             <p className="text-sm font-semibold text-gold">Passwordless Entry</p>
             <h1 className="mt-2 text-3xl font-bold">メールだけでGateへ。</h1>
             <p className="mt-3 text-sm leading-7 text-ink/65">
@@ -42,7 +42,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <Card className="bg-navy text-white">
               <h2 className="text-2xl font-bold">初めての方へ</h2>
               <p className="mt-2 text-sm leading-7 text-white/70">
-                メールリンクで入った後、Gate申請に進みます。学びの軌跡、実績、探究心、次の一手をもとに審査します。
+                メールリンクで入った後、新規登録に進みます。学びの軌跡、実績、探究心、次の一手をもとに審査します。
                 学歴や収入は参考情報として扱い、表側には出しません。
               </p>
             </Card>
@@ -74,7 +74,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
                   <input className={inputClass} name="password" type="password" minLength={6} required />
                 </Field>
                 <Button type="submit" variant="secondary">
-                  登録してGate申請へ
+                  登録して新規登録へ
                 </Button>
               </form>
             </Card>

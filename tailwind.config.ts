@@ -6,10 +6,10 @@ const config: Config = {
     extend: {
       colors: {
         ink: "#111318",
-        smoke: "#f4f2ee",
+        smoke: "#ece7df",
         navy: "#111d31",
-        line: "#dfddd8",
-        gold: "#a98952"
+        line: "#d2c8b8",
+        gold: "#9b7435"
       },
       fontFamily: {
         sans: ["Inter", "Noto Sans JP", "system-ui", "sans-serif"],
