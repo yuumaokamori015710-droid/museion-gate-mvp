@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Field, inputClass } from "@/components/ui/field";
 
-export default async function ApplyPage({ searchParams }: { searchParams: Promise<{ submitted?: string }> }) {
-  const { submitted } = await searchParams;
+export default async function ApplyPage({ searchParams }: { searchParams: Promise<{ submitted?: string; error?: string }> }) {
+  const { submitted, error } = await searchParams;
   const { user, profile } = await getSessionProfile();
 
   if (submitted) {
@@ -41,6 +41,12 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
         </div>
         <Card className="mt-8">
           <form action={submitApplication} className="grid gap-5">
+            {error === "db_setup" ? (
+              <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm leading-7 text-red-900">
+                Supabaseのテーブルがまだ作成されていないため、申請を保存できませんでした。
+                SQL EditorでセットアップSQLを実行してから、もう一度送信してください。
+              </div>
+            ) : null}
             <div className="rounded-md border border-gold/25 bg-gold/10 p-4 text-sm leading-7 text-ink/75">
               <span className="font-bold text-ink">審査で見るもの:</span> 本人性、学びの軌跡、職業・制作・研究などの実績、
               深く考えている問い、そしてコミュニティへ持ち込める視点です。

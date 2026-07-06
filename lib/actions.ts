@@ -81,7 +81,7 @@ export async function submitApplication(formData: FormData) {
   };
 
   if (user) {
-    await supabase.from("profiles").upsert({
+    const { error } = await supabase.from("profiles").upsert({
       id: user.id,
       email,
       display_name: payload.display_name,
@@ -99,10 +99,11 @@ export async function submitApplication(formData: FormData) {
       social_links: payload.social_links,
       updated_at: new Date().toISOString()
     });
+    if (error) redirect("/apply?error=db_setup");
   }
 
   const { error } = await supabase.from("applications").insert(payload);
-  if (error) throw error;
+  if (error) redirect("/apply?error=db_setup");
   redirect("/apply?submitted=1");
 }
 
