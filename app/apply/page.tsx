@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { submitApplication } from "@/lib/actions";
-import { incomeRanges, interests, userTypes } from "@/lib/constants";
+import { incomeRanges, interests } from "@/lib/constants";
 import { getSessionProfile } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -52,25 +52,22 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
               深く考えている問い、そしてコミュニティへ持ち込める視点です。
             </div>
             <div className="grid gap-4 md:grid-cols-2">
-              <Field label="氏名"><input className={inputClass} name="full_name" defaultValue={profile?.full_name || ""} required /></Field>
-              <Field label="表示名"><input className={inputClass} name="display_name" defaultValue={profile?.display_name || user?.user_metadata?.display_name || ""} required /></Field>
-              <Field label="メールアドレス"><input className={inputClass} name="email" type="email" defaultValue={profile?.email || user?.email || ""} required /></Field>
-              <Field label="現在の属性">
-                <select className={inputClass} name="user_type" defaultValue={profile?.user_type || "会社員"}>
-                  {userTypes.map((item) => <option key={item}>{item}</option>)}
-                </select>
-              </Field>
-              <Field label="学びの所属・卒業校"><input className={inputClass} name="university" defaultValue={profile?.university || ""} placeholder="大学、大学院、研究機関など" /></Field>
-              <Field label="現在の所属"><input className={inputClass} name="company" defaultValue={profile?.company || ""} placeholder="勤務先、事業名、所属組織など" /></Field>
-              <Field label="役割・専門領域"><input className={inputClass} name="job_title" defaultValue={profile?.job_title || ""} placeholder="職種、役職、研究領域など" /></Field>
-              <Field label="経済的実績の参考情報">
+              <Field label="氏名" required><input className={inputClass} name="full_name" defaultValue={profile?.full_name || ""} required /></Field>
+              <Field label="メールアドレス" required><input className={inputClass} name="email" type="email" defaultValue={profile?.email || user?.email || ""} required /></Field>
+              <Field label="卒業校" optional><input className={inputClass} name="university" defaultValue={profile?.university || ""} placeholder="大学、大学院、研究機関など" /></Field>
+              <Field label="現在の所属" optional><input className={inputClass} name="company" defaultValue={profile?.company || ""} placeholder="勤務先、事業名、所属組織など" /></Field>
+              <Field label="役割" optional><input className={inputClass} name="job_title" defaultValue={profile?.job_title || ""} placeholder="職種、役職、研究領域など" /></Field>
+              <Field label="経済的実績の参考情報" optional>
                 <select className={inputClass} name="income_range" defaultValue={profile?.income_range || "未回答"}>
                   {incomeRanges.map((item) => <option key={item}>{item}</option>)}
                 </select>
               </Field>
             </div>
             <div>
-              <p className="mb-3 text-sm font-semibold">関心領域</p>
+              <p className="mb-3 flex items-center gap-2 text-sm font-semibold">
+                関心領域
+                <span className="rounded-full border border-line bg-[#fffaf2] px-2 py-0.5 text-[11px] font-bold text-ink/55">任意</span>
+              </p>
               <div className="grid gap-2 sm:grid-cols-3">
                 {interests.map((item) => (
                   <label key={item} className="flex items-center gap-2 rounded-md border border-line bg-smoke px-3 py-2 text-sm">
@@ -80,11 +77,11 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
                 ))}
               </div>
             </div>
-            <Field label="これまでの実績・制作・研究・意思決定"><textarea className={inputClass} name="bio" rows={4} defaultValue={profile?.bio || ""} required /></Field>
-            <Field label="いま深く考えている問い / 次の一手"><textarea className={inputClass} name="purpose" rows={4} defaultValue={profile?.purpose || ""} required /></Field>
+            <Field label="これまでの実績・制作・研究・意思決定" optional><textarea className={inputClass} name="bio" rows={4} defaultValue={profile?.bio || ""} /></Field>
+            <Field label="いま深く考えている問い / 次の一手" optional><textarea className={inputClass} name="purpose" rows={4} defaultValue={profile?.purpose || ""} /></Field>
             <div className="grid gap-4 md:grid-cols-2">
-              <Field label="招待コード"><input className={inputClass} name="invitation_code" defaultValue={profile?.invitation_code || ""} /></Field>
-              <Field label="実績確認URL"><input className={inputClass} name="social_url" type="url" placeholder="LinkedIn / Wantedly / researchmap / GitHub / ポートフォリオ" /></Field>
+              <Field label="招待コード" optional><input className={inputClass} name="invitation_code" defaultValue={profile?.invitation_code || ""} /></Field>
+              <Field label="実績確認URL" optional><input className={inputClass} name="social_url" type="url" placeholder="LinkedIn / Wantedly / researchmap / GitHub / ポートフォリオ" /></Field>
             </div>
             <label className="flex items-start gap-3 text-sm text-ink/70">
               <input className="mt-1" type="checkbox" required />

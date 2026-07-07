@@ -65,7 +65,7 @@ export async function submitApplication(formData: FormData) {
   const payload = {
     user_id: user?.id || null,
     full_name: requireText(formData, "full_name"),
-    display_name: requireText(formData, "display_name"),
+    display_name: String(formData.get("display_name") || "").trim() || requireText(formData, "full_name"),
     email,
     user_type: String(formData.get("user_type") || ""),
     university: String(formData.get("university") || ""),
