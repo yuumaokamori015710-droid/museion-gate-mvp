@@ -2,14 +2,16 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "ghost" | "danger";
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "gold" | "dark";
 };
 
 const styles = {
   primary: "bg-navy text-white hover:bg-ink",
   secondary: "bg-[#fffaf2] text-ink border border-line hover:border-navy",
   ghost: "bg-transparent text-ink hover:bg-[#fffaf2]",
-  danger: "bg-red-700 text-white hover:bg-red-800"
+  danger: "bg-red-700 text-white hover:bg-red-800",
+  gold: "bg-gold text-white shadow-lg shadow-black/20 hover:bg-[#856229]",
+  dark: "border border-gold/70 bg-navy/80 text-white hover:bg-navy"
 };
 
 export function Button({ className, variant = "primary", ...props }: Props) {

@@ -1,4 +1,4 @@
-import { ArrowRight, Brain, Compass, DoorOpen, Eye, ShieldCheck, Users } from "lucide-react";
+import { Brain, Compass, Eye, ShieldCheck, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Card, Section } from "@/components/ui/card";
 
@@ -37,11 +37,11 @@ export default function LandingPage() {
             肩書きや数字だけではなく、何を考え、どこへ向かうのか。その意思決定こそが、ここでの価値になります。
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <ButtonLink href="/apply" className="bg-gold text-white shadow-lg shadow-black/20 hover:bg-[#856229]">
-              新規登録 <ArrowRight size={16} />
+            <ButtonLink href="/apply" variant="gold">
+              新規登録
             </ButtonLink>
-            <ButtonLink href="/login" variant="secondary" className="border-white/35 bg-white/12 text-white hover:bg-white/20">
-              ログインする
+            <ButtonLink href="/login" variant="dark">
+              ログイン
             </ButtonLink>
           </div>
         </div>
@@ -118,8 +118,8 @@ export default function LandingPage() {
               次に何を考え、どこへ動くのか。MUSEION Gateで、あなたの次の一手を見つけてください。
             </p>
           </div>
-          <ButtonLink href="/apply" className="bg-gold text-white shadow-lg shadow-black/20 hover:bg-[#856229]">
-            <DoorOpen size={16} /> 新規登録
+          <ButtonLink href="/apply" variant="gold">
+            新規登録
           </ButtonLink>
         </Section>
       </section>
