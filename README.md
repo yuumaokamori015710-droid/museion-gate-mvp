@@ -108,7 +108,7 @@ where email = 'admin@example.com';
 
 - LP
 - Magic Linkログイン
-- メール登録、パスワードログイン、ログアウト
+- Magic Linkログイン、新規登録、ログアウト
 - 新規登録フロー
 - pending / approved / rejected / suspended のステータス制御
 - 承認済みメンバー向けアプリレイアウト

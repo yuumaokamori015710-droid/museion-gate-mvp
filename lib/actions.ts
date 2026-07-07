@@ -25,7 +25,7 @@ export async function signUp(formData: FormData) {
       data: { display_name: displayName }
     }
   });
-  if (error) throw error;
+  if (error) redirect(`/login?error=signup&email=${encodeURIComponent(email)}`);
   redirect("/apply");
 }
 
@@ -34,7 +34,7 @@ export async function signIn(formData: FormData) {
   const email = requireText(formData, "email");
   const password = requireText(formData, "password");
   const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) throw error;
+  if (error) redirect(`/login?error=invalid&email=${encodeURIComponent(email)}`);
   redirect("/app");
 }
 
@@ -49,7 +49,7 @@ export async function sendMagicLink(formData: FormData) {
       shouldCreateUser: true
     }
   });
-  if (error) throw error;
+  if (error) redirect(`/login?error=magic&email=${encodeURIComponent(email)}`);
   redirect(`/login?sent=1&email=${encodeURIComponent(email)}`);
 }
 

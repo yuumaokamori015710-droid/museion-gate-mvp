@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation";
-import { sendMagicLink, signIn, signUp } from "@/lib/actions";
+import { sendMagicLink } from "@/lib/actions";
 import { getSessionProfile } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Field, inputClass } from "@/components/ui/field";
 import Link from "next/link";
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ sent?: string; email?: string }> }) {
-  const { sent, email } = await searchParams;
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ sent?: string; email?: string; error?: string }> }) {
+  const { sent, email, error } = await searchParams;
   const { user } = await getSessionProfile();
   if (user) redirect("/app");
 
@@ -30,6 +30,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
                 メールを開いて、リンクから続けてください。
               </div>
             ) : null}
+            {error ? (
+              <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-sm leading-7 text-red-900">
+                ログインリンクを送れませんでした。メールアドレスを確認して、もう一度お試しください。
+              </div>
+            ) : null}
             <form action={sendMagicLink} className="mt-6 grid gap-4">
               <Field label="メールアドレス">
                 <input className={inputClass} name="email" type="email" placeholder="you@example.com" defaultValue={email || ""} required />
@@ -45,38 +50,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
                 メールリンクで入った後、新規登録に進みます。学びの軌跡、実績、探究心、次の一手をもとに審査します。
                 学歴や収入は参考情報として扱い、表側には出しません。
               </p>
-            </Card>
-
-            <Card>
-              <h2 className="text-xl font-bold">パスワードでログイン</h2>
-              <p className="mt-2 text-sm text-ink/60">既にパスワードを設定しているメンバー向けです。</p>
-              <form action={signIn} className="mt-5 grid gap-4">
-                <Field label="メールアドレス">
-                  <input className={inputClass} name="email" type="email" required />
-                </Field>
-                <Field label="パスワード">
-                  <input className={inputClass} name="password" type="password" minLength={6} required />
-                </Field>
-                <Button type="submit" variant="secondary">パスワードで入る</Button>
-              </form>
-            </Card>
-
-            <Card>
-              <h2 className="text-xl font-bold">パスワード登録</h2>
-              <form action={signUp} className="mt-5 grid gap-4">
-                <Field label="表示名">
-                  <input className={inputClass} name="display_name" required />
-                </Field>
-                <Field label="メールアドレス">
-                  <input className={inputClass} name="email" type="email" required />
-                </Field>
-                <Field label="パスワード">
-                  <input className={inputClass} name="password" type="password" minLength={6} required />
-                </Field>
-                <Button type="submit" variant="secondary">
-                  登録して新規登録へ
-                </Button>
-              </form>
             </Card>
           </div>
         </div>
