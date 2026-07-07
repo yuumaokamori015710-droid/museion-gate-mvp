@@ -18,7 +18,11 @@ export async function createSupabaseServerClient() {
       },
       setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
         cookiesToSet.forEach(({ name, value, options }) => {
-          cookieStore.set(name, value, options);
+          try {
+            cookieStore.set(name, value, options);
+          } catch {
+            // Server Components cannot always write refreshed auth cookies.
+          }
         });
       }
     }
@@ -33,6 +37,6 @@ export async function getSessionProfile() {
 
   if (!user) return { supabase, user: null, profile: null };
 
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single();
+  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
   return { supabase, user, profile };
 }

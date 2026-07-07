@@ -16,6 +16,18 @@ export async function GET(request: Request) {
       } = await supabase.auth.getUser();
 
       if (user) {
+        await supabase.from("profiles").upsert({
+          id: user.id,
+          email: user.email,
+          display_name:
+            user.user_metadata?.display_name ||
+            user.user_metadata?.name ||
+            user.email?.split("@")[0] ||
+            "メンバー",
+          status: "pending",
+          updated_at: new Date().toISOString()
+        }, { onConflict: "id", ignoreDuplicates: true });
+
         const { data: profile } = await supabase
           .from("profiles")
           .select("status")

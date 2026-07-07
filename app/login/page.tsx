@@ -8,8 +8,10 @@ import Link from "next/link";
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ sent?: string; email?: string; error?: string }> }) {
   const { sent, email, error } = await searchParams;
-  const { user } = await getSessionProfile();
-  if (user) redirect("/app");
+  const { user, profile } = await getSessionProfile();
+  if (user && profile?.status === "approved") redirect("/app");
+  if (user && profile?.status === "pending") redirect("/pending");
+  if (user) redirect("/apply");
 
   return (
     <main className="grid min-h-screen place-items-center bg-smoke px-5 py-12">
