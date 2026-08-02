@@ -5,7 +5,7 @@ import { getSessionProfile } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Field, inputClass } from "@/components/ui/field";
-import { AdmissionTest } from "@/components/admission-test";
+import { AdmissionTestResultField } from "@/components/admission-test";
 
 export default async function ApplyPage({ searchParams }: { searchParams: Promise<{ submitted?: string; error?: string }> }) {
   const { submitted, error } = await searchParams;
@@ -57,7 +57,7 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
               <span className="font-bold text-ink">審査で見るもの:</span> 本人性、学びの軌跡、職業・制作・研究などの実績、
               深く考えている問い、短時間の入会テスト、そしてコミュニティへ持ち込める視点です。
             </div>
-            <AdmissionTest />
+            <AdmissionTestResultField />
             <div className="grid gap-4 md:grid-cols-2">
               <Field label="氏名" required><input className={inputClass} name="full_name" defaultValue={profile?.full_name || ""} required /></Field>
               <Field label="メールアドレス" required><input className={inputClass} name="email" type="email" defaultValue={profile?.email || user?.email || ""} required /></Field>

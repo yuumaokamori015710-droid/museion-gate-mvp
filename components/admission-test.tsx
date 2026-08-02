@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type Question = {
@@ -7,6 +8,15 @@ type Question = {
   options: string[];
   answer: number;
 };
+
+type StoredResult = {
+  score: string;
+  detail: string;
+  completedAt: string;
+};
+
+const storageKey = "museion-admission-test-result";
+const secondsPerQuestion = 5;
 
 const questions: Question[] = [
   { prompt: "2, 4, 8, 16, ?", options: ["24", "30", "32", "36"], answer: 2 },
@@ -31,137 +41,201 @@ const questions: Question[] = [
   { prompt: "原因 : 結果 = 問い : ?", options: ["仮説", "答え", "議論", "沈黙"], answer: 1 }
 ];
 
-const secondsPerQuestion = 5;
+function readStoredResult(): StoredResult | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(storageKey);
+    return raw ? JSON.parse(raw) as StoredResult : null;
+  } catch {
+    return null;
+  }
+}
 
-export function AdmissionTest() {
-  const [started, setStarted] = useState(false);
-  const [completed, setCompleted] = useState(false);
-  const [current, setCurrent] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(secondsPerQuestion);
-  const [correct, setCorrect] = useState(0);
-  const [finalScore, setFinalScore] = useState(0);
-  const [locked, setLocked] = useState(false);
-  const [selected, setSelected] = useState<number | null>(null);
+function writeStoredResult(result: StoredResult) {
+  window.sessionStorage.setItem(storageKey, JSON.stringify(result));
+}
 
-  const question = questions[current];
-  const scoreValue = completed ? `${finalScore}/${questions.length}` : "";
-  const detailValue = useMemo(
-    () => completed
-      ? `入会IQテスト: ${finalScore}/${questions.length}、制限時間: 1問${secondsPerQuestion}秒、問題数: ${questions.length}問`
-      : "",
-    [completed, finalScore]
-  );
-
-  const answer = useCallback((choice: number | null) => {
-    if (locked || completed) return;
-    const nextCorrect = correct + (choice === question.answer ? 1 : 0);
-    setSelected(choice);
-    setLocked(true);
-    setCorrect(nextCorrect);
-
-    window.setTimeout(() => {
-      if (current + 1 >= questions.length) {
-        setFinalScore(nextCorrect);
-        setCompleted(true);
-        return;
-      }
-      setCurrent((value) => value + 1);
-      setTimeLeft(secondsPerQuestion);
-      setSelected(null);
-      setLocked(false);
-    }, 260);
-  }, [completed, correct, current, locked, question.answer]);
+export function AdmissionTestResultField() {
+  const [result, setResult] = useState<StoredResult | null>(null);
 
   useEffect(() => {
-    if (!started || completed || locked) return;
-    const timer = window.setInterval(() => {
-      setTimeLeft((value) => {
-        if (value <= 1) {
-          window.clearInterval(timer);
-          answer(null);
-          return 0;
-        }
-        return value - 1;
-      });
-    }, 1000);
-    return () => window.clearInterval(timer);
-  }, [started, completed, locked, current, answer]);
+    setResult(readStoredResult());
+  }, []);
 
   return (
     <div className="rounded-md border border-navy/15 bg-[#f8f2e8] p-4">
-      <input type="hidden" name="admission_test_completed" value={completed ? "1" : "0"} />
-      <input type="hidden" name="admission_test_detail" value={detailValue} />
+      <input type="hidden" name="admission_test_completed" value={result ? "1" : "0"} />
+      <input type="hidden" name="admission_test_score" value={result?.score || "未受験"} />
+      <input type="hidden" name="admission_test_detail" value={result?.detail || ""} />
 
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs font-bold tracking-[0.2em] text-gold">MEMBERSHIP TEST</p>
           <h2 className="mt-2 text-xl font-bold text-ink">入会IQテスト</h2>
           <p className="mt-2 max-w-2xl text-sm leading-7 text-ink/65">
-            完全会員制の信頼を保つため、20問の短時間テストを実施します。1問5秒で自動的に進み、結果は審査項目に自動入力されます。
+            完全会員制の審査項目です。専用画面で20問の短時間テストを受けると、結果がここに自動入力されます。
           </p>
         </div>
         <div className="rounded-md border border-line bg-white px-4 py-3 text-sm">
           <span className="block text-xs font-bold text-ink/45">自動入力</span>
-          <input
-            className="mt-1 w-28 bg-transparent text-lg font-bold text-ink outline-none"
-            name="admission_test_score"
-            value={completed ? scoreValue : "未受験"}
-            readOnly
-            aria-label="入会IQテスト結果"
-          />
+          <span className="mt-1 block text-lg font-bold text-ink">{result?.score || "未受験"}</span>
         </div>
       </div>
 
-      {!started ? (
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <Link
+          href="/apply/test"
+          className="inline-flex min-h-10 items-center justify-center rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white transition hover:bg-navy/90"
+        >
+          {result ? "入会IQテストを受け直す" : "入会IQテストを受ける"}
+        </Link>
+        {result ? <span className="text-sm font-semibold text-green-800">テスト完了済み</span> : null}
+      </div>
+    </div>
+  );
+}
+
+export function AdmissionTestRunner() {
+  const [phase, setPhase] = useState<"intro" | "testing" | "done">("intro");
+  const [current, setCurrent] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(secondsPerQuestion);
+  const [correct, setCorrect] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [answered, setAnswered] = useState(false);
+
+  const question = questions[current];
+  const progress = ((current + 1) / questions.length) * 100;
+  const detailValue = useMemo(
+    () => `入会IQテスト: ${finalScore}/${questions.length}、制限時間: 1問${secondsPerQuestion}秒、問題数: ${questions.length}問`,
+    [finalScore]
+  );
+
+  const finish = useCallback((score: number) => {
+    setFinalScore(score);
+    writeStoredResult({
+      score: `${score}/${questions.length}`,
+      detail: `入会IQテスト: ${score}/${questions.length}、制限時間: 1問${secondsPerQuestion}秒、問題数: ${questions.length}問`,
+      completedAt: new Date().toISOString()
+    });
+    setPhase("done");
+  }, []);
+
+  const goNext = useCallback((choice: number | null = selected) => {
+    const nextCorrect = correct + (choice === question.answer ? 1 : 0);
+    if (current + 1 >= questions.length) {
+      finish(nextCorrect);
+      return;
+    }
+    setCorrect(nextCorrect);
+    setCurrent((value) => value + 1);
+    setTimeLeft(secondsPerQuestion);
+    setSelected(null);
+    setAnswered(false);
+  }, [correct, current, finish, question.answer, selected]);
+
+  useEffect(() => {
+    if (phase !== "testing") return;
+    const timer = window.setInterval(() => {
+      setTimeLeft((value) => {
+        if (value <= 1) {
+          window.clearInterval(timer);
+          goNext();
+          return 0;
+        }
+        return value - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [phase, current, goNext]);
+
+  if (phase === "intro") {
+    return (
+      <div className="grid gap-5">
+        <div className="rounded-md border border-gold/25 bg-gold/10 p-5 text-sm leading-7 text-ink/75">
+          <span className="font-bold text-ink">開始前の注意:</span> 全20問、1問あたり5秒です。開始後はタイマーが止まりません。
+          回答を選んだら「次の問題へ」で進みます。時間切れの場合は未回答として自動的に次へ進みます。
+        </div>
+        <div className="grid gap-3 text-sm text-ink/65 md:grid-cols-3">
+          <div className="rounded-md border border-line bg-smoke p-4"><span className="block text-lg font-bold text-ink">20問</span>短時間の推論問題</div>
+          <div className="rounded-md border border-line bg-smoke p-4"><span className="block text-lg font-bold text-ink">5秒</span>1問ごとの制限時間</div>
+          <div className="rounded-md border border-line bg-smoke p-4"><span className="block text-lg font-bold text-ink">自動入力</span>結果は登録フォームへ反映</div>
+        </div>
         <button
           type="button"
-          onClick={() => setStarted(true)}
-          className="mt-5 rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-navy/90"
+          onClick={() => setPhase("testing")}
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-gold px-5 py-3 text-sm font-bold text-white shadow-lg shadow-black/10 transition hover:bg-[#856229] md:w-fit"
         >
-          テストを開始する
+          注意事項を確認してスタート
         </button>
-      ) : null}
+      </div>
+    );
+  }
 
-      {started && !completed ? (
-        <div className="mt-5 rounded-md border border-line bg-white p-4">
-          <div className="flex items-center justify-between gap-4 text-sm">
-            <span className="font-bold text-ink">問 {current + 1} / {questions.length}</span>
-            <span className={`rounded-full px-3 py-1 font-bold ${timeLeft <= 2 ? "bg-red-50 text-red-700" : "bg-smoke text-ink/70"}`}>
-              残り {timeLeft} 秒
-            </span>
-          </div>
-          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-smoke">
-            <div
-              className="h-full rounded-full bg-gold transition-all"
-              style={{ width: `${((current + 1) / questions.length) * 100}%` }}
-            />
-          </div>
-          <p className="mt-5 text-xl font-bold text-ink">{question.prompt}</p>
-          <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            {question.options.map((option, index) => (
-              <button
-                key={option}
-                type="button"
-                disabled={locked}
-                onClick={() => answer(index)}
-                className={`rounded-md border px-4 py-3 text-left text-sm font-semibold transition ${
-                  selected === index
-                    ? "border-gold bg-gold/15 text-ink"
-                    : "border-line bg-smoke text-ink hover:border-navy/30 hover:bg-white"
-                }`}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
+  if (phase === "done") {
+    return (
+      <div className="grid gap-5">
+        <div className="rounded-md border border-green-200 bg-green-50 p-5 text-sm leading-7 text-green-900">
+          入会IQテストが完了しました。結果は登録フォームに自動入力されます。
         </div>
-      ) : null}
+        <div className="rounded-md border border-line bg-smoke p-5">
+          <p className="text-xs font-bold tracking-[0.2em] text-gold">RESULT</p>
+          <p className="mt-2 text-4xl font-bold text-ink">{finalScore}/{questions.length}</p>
+          <p className="mt-2 text-sm text-ink/60">{detailValue}</p>
+        </div>
+        <Link
+          href="/apply"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-navy px-5 py-3 text-sm font-bold text-white transition hover:bg-navy/90 md:w-fit"
+        >
+          新規登録フォームに戻る
+        </Link>
+      </div>
+    );
+  }
 
-      {completed ? (
-        <div className="mt-5 rounded-md border border-green-200 bg-green-50 p-4 text-sm leading-7 text-green-900">
-          入会IQテストが完了しました。結果は審査情報に自動で反映されます。
-        </div>
-      ) : null}
+  return (
+    <div className="rounded-md border border-line bg-white p-5">
+      <div className="flex items-center justify-between gap-4 text-sm">
+        <span className="font-bold text-ink">問 {current + 1} / {questions.length}</span>
+        <span className={`rounded-full px-3 py-1 font-bold ${timeLeft <= 2 ? "bg-red-50 text-red-700" : "bg-smoke text-ink/70"}`}>
+          残り {timeLeft} 秒
+        </span>
+      </div>
+      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-smoke">
+        <div className="h-full rounded-full bg-gold transition-all" style={{ width: `${progress}%` }} />
+      </div>
+      <p className="mt-6 text-2xl font-bold leading-9 text-ink">{question.prompt}</p>
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        {question.options.map((option, index) => (
+          <button
+            key={option}
+            type="button"
+            disabled={answered}
+            onClick={() => {
+              setSelected(index);
+              setAnswered(true);
+            }}
+            className={`min-h-14 rounded-md border px-4 py-3 text-left text-sm font-semibold transition ${
+              selected === index
+                ? "border-gold bg-gold/15 text-ink"
+                : "border-line bg-smoke text-ink hover:border-navy/30 hover:bg-white"
+            }`}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <p className="text-xs text-ink/50">{answered ? "回答を記録しました。次へ進んでください。" : "選択すると回答が固定されます。"}</p>
+        <button
+          type="button"
+          onClick={() => goNext()}
+          disabled={!answered}
+          className="inline-flex min-h-10 items-center justify-center rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          次の問題へ
+        </button>
+      </div>
     </div>
   );
 }
