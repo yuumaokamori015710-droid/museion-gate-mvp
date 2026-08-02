@@ -9,7 +9,7 @@ const values = [
   ["審査制だからノイズが少ない", "知性、実績、探究心、貢献可能性をもとに信頼を保ちます。", ShieldCheck]
 ];
 
-const steps = ["新規登録", "審査", "承認", "Agora / Stoa / Symposiaへの参加"];
+const steps = ["新規登録＆入会IQテスト", "審査", "承認", "Agora / Stoa / Symposiaへの参加"];
 
 const community = [
   "学び続ける学生・大学院生",
@@ -31,14 +31,14 @@ export default function LandingPage() {
           <p className="mb-5 text-sm font-semibold tracking-[0.28em] text-white/70">MUSEION Gate</p>
           <h1 className="max-w-4xl font-serif text-5xl leading-tight md:text-7xl">知性が、次に動く入口。</h1>
           <p className="mt-6 max-w-2xl text-base leading-8 text-white/78 md:text-lg">
-            キャリア、起業、副業、投資、学び。知性と実績を持つ人の意思決定が見える、審査制コミュニティ。
+            キャリア、起業、副業、投資、学び。知性と実績を持つ人の意思決定が見える、完全会員制コミュニティ。
           </p>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-white/58">
             肩書きや数字だけではなく、何を考え、どこへ向かうのか。その意思決定こそが、ここでの価値になります。
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <ButtonLink href="/apply" variant="gold">
-              新規登録
+              新規登録＆入会IQテストを受ける
             </ButtonLink>
             <ButtonLink href="/login" variant="dark">
               ログイン
@@ -119,7 +119,7 @@ export default function LandingPage() {
             </p>
           </div>
           <ButtonLink href="/apply" variant="gold">
-            新規登録
+            新規登録＆入会IQテストを受ける
           </ButtonLink>
         </Section>
       </section>

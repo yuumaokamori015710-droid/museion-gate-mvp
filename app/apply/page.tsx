@@ -5,6 +5,7 @@ import { getSessionProfile } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Field, inputClass } from "@/components/ui/field";
+import { AdmissionTest } from "@/components/admission-test";
 
 export default async function ApplyPage({ searchParams }: { searchParams: Promise<{ submitted?: string; error?: string }> }) {
   const { submitted, error } = await searchParams;
@@ -35,7 +36,7 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
           <p className="text-sm font-semibold text-gold">Gate Application</p>
           <h1 className="mt-2 text-4xl font-bold">新規登録</h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-ink/65">
-            MUSEION Gateは、知性、探究心、実績、次の一手をもとに信頼を保つ審査制コミュニティです。
+            MUSEION Gateは、知性、探究心、実績、次の一手をもとに信頼を保つ完全会員制コミュニティです。
             学歴や収入は参考情報の一部として扱い、公開プロフィールには出しません。
           </p>
         </div>
@@ -47,10 +48,16 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
                 SQL EditorでセットアップSQLを実行してから、もう一度送信してください。
               </div>
             ) : null}
+            {error === "test_required" ? (
+              <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm leading-7 text-red-900">
+                入会IQテストを完了してから、新規登録を送信してください。
+              </div>
+            ) : null}
             <div className="rounded-md border border-gold/25 bg-gold/10 p-4 text-sm leading-7 text-ink/75">
               <span className="font-bold text-ink">審査で見るもの:</span> 本人性、学びの軌跡、職業・制作・研究などの実績、
-              深く考えている問い、そしてコミュニティへ持ち込める視点です。
+              深く考えている問い、短時間の入会テスト、そしてコミュニティへ持ち込める視点です。
             </div>
+            <AdmissionTest />
             <div className="grid gap-4 md:grid-cols-2">
               <Field label="氏名" required><input className={inputClass} name="full_name" defaultValue={profile?.full_name || ""} required /></Field>
               <Field label="メールアドレス" required><input className={inputClass} name="email" type="email" defaultValue={profile?.email || user?.email || ""} required /></Field>

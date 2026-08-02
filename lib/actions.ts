@@ -62,6 +62,11 @@ export async function signOut() {
 export async function submitApplication(formData: FormData) {
   const { supabase, user } = await getSessionProfile();
   const email = requireText(formData, "email");
+  const testCompleted = String(formData.get("admission_test_completed") || "") === "1";
+  const testScore = String(formData.get("admission_test_score") || "").trim();
+  const testDetail = String(formData.get("admission_test_detail") || "").trim();
+  if (!testCompleted || !testScore || testScore === "未受験") redirect("/apply?error=test_required");
+  const reviewNote = testDetail || `入会IQテスト: ${testScore}`;
   const payload = {
     user_id: user?.id || null,
     full_name: requireText(formData, "full_name"),
@@ -77,6 +82,7 @@ export async function submitApplication(formData: FormData) {
     purpose: String(formData.get("purpose") || ""),
     invitation_code: String(formData.get("invitation_code") || ""),
     social_links: { url: String(formData.get("social_url") || "") },
+    review_note: reviewNote,
     status: "pending"
   };
 

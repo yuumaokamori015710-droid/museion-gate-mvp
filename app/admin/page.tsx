@@ -24,6 +24,7 @@ type Application = {
   bio: string | null;
   interests: string[] | null;
   purpose: string | null;
+  review_note: string | null;
 };
 
 type Report = {
@@ -89,6 +90,9 @@ export default async function AdminPage() {
                         <p className="md:col-span-2"><span className="font-semibold text-ink">確認URL:</span> {app.social_links?.url || "未入力"}</p>
                       </div>
                       <p className="mt-2 text-sm text-ink/65">関心: {(app.interests || []).join(", ")}</p>
+                      <p className="mt-3 rounded-md border border-gold/25 bg-gold/10 p-3 text-sm leading-6 text-ink/75">
+                        <span className="font-semibold text-ink">入会テスト:</span> {app.review_note || "未受験"}
+                      </p>
                       <p className="mt-3 text-sm leading-6 text-ink/70">実績・制作・研究: {app.bio}</p>
                       <p className="mt-3 text-sm leading-6 text-ink/70">問い / 次の一手: {app.purpose}</p>
                     </div>
