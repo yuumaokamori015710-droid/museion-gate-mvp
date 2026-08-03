@@ -19,26 +19,26 @@ const storageKey = "museion-admission-test-result";
 const secondsPerQuestion = 5;
 
 const questions: Question[] = [
-  { prompt: "りんごとバナナの共通点は？", options: ["赤い", "果物", "丸い", "同じ木になる"], answer: 1 },
-  { prompt: "「慎重」に最も近い意味は？", options: ["速い", "静かな", "注意深い", "新しい"], answer: 2 },
-  { prompt: "7 - 2 + 6 = ?", options: ["9", "10", "11", "12"], answer: 2 },
-  { prompt: "3・8・1 を逆から並べると？", options: ["183", "381", "813", "831"], answer: 2 },
-  { prompt: "□ ○ □ ○ □ ?", options: ["□", "○", "△", "×"], answer: 1 },
-  { prompt: "犬と猫の共通点は？", options: ["哺乳類", "鳥類", "野菜", "道具"], answer: 0 },
-  { prompt: "「抽象」の反対に近いものは？", options: ["具体", "高速", "遠方", "単独"], answer: 0 },
-  { prompt: "18 ÷ 3 + 4 = ?", options: ["8", "9", "10", "11"], answer: 2 },
-  { prompt: "6・1・9・4 を小さい順に並べると？", options: ["1469", "1946", "4619", "9641"], answer: 0 },
-  { prompt: "A B D G K ?", options: ["L", "M", "N", "O"], answer: 3 },
-  { prompt: "時計と定規の共通点は？", options: ["測る道具", "食べ物", "乗り物", "植物"], answer: 0 },
-  { prompt: "「暫定」に最も近い意味は？", options: ["永久の", "一時的な", "巨大な", "透明な"], answer: 1 },
-  { prompt: "5個入りを4箱買うと何個？", options: ["9", "16", "20", "25"], answer: 2 },
-  { prompt: "2・7・4 を逆から並べると？", options: ["247", "274", "427", "472"], answer: 3 },
-  { prompt: "△ △ ○ △ △ ○ ?", options: ["△", "○", "□", "×"], answer: 0 },
-  { prompt: "雨と雪の共通点は？", options: ["天気", "金属", "楽器", "数字"], answer: 0 },
-  { prompt: "「推論」に最も近いものは？", options: ["眠ること", "考えて導くこと", "色を塗ること", "物を運ぶこと"], answer: 1 },
-  { prompt: "12 + 15 - 7 = ?", options: ["18", "19", "20", "21"], answer: 2 },
-  { prompt: "9・3・8・2 を大きい順に並べると？", options: ["9823", "9382", "8932", "2398"], answer: 0 },
-  { prompt: "● ○ ○ ● ○ ○ ?", options: ["●", "○", "△", "□"], answer: 0 }
+  { prompt: "「仮説」と「地図」に最も共通する機能は？", options: ["記録する", "方向づける", "隠す", "測量する"], answer: 1 },
+  { prompt: "「緻密」に最も近い意味は？", options: ["大胆な", "細部まで整った", "一時的な", "騒がしい"], answer: 1 },
+  { prompt: "17 + 24 - 9 ÷ 3 = ?", options: ["35", "38", "39", "42"], answer: 1 },
+  { prompt: "8・2・9・4 を逆順にし、奇数だけ残すと？", options: ["29", "92", "94", "49"], answer: 1 },
+  { prompt: "□ △ ○ / △ ○ □ / ○ □ ?", options: ["△", "○", "□", "×"], answer: 0 },
+  { prompt: "「制度」と「文法」に最も共通するものは？", options: ["速度", "規則", "色彩", "数量"], answer: 1 },
+  { prompt: "「曖昧」の反対に最も近いものは？", options: ["複雑", "明瞭", "静寂", "柔軟"], answer: 1 },
+  { prompt: "36 ÷ 4 + 7 × 2 = ?", options: ["21", "23", "25", "32"], answer: 1 },
+  { prompt: "7・1・8・3・6 を小さい順にし、2番目と4番目を読むと？", options: ["36", "37", "67", "73"], answer: 0 },
+  { prompt: "B E J Q ?", options: ["X", "Y", "Z", "W"], answer: 2 },
+  { prompt: "「顕微鏡」と「統計」に最も共通する役割は？", options: ["拡大して見る", "見えにくい構造を捉える", "音を測る", "距離を縮める"], answer: 1 },
+  { prompt: "「暫定」と最も対になる語は？", options: ["仮説", "恒久", "局所", "未定"], answer: 1 },
+  { prompt: "15%引きで850円。元の価格は？", options: ["950円", "1,000円", "1,050円", "1,100円"], answer: 1 },
+  { prompt: "4・9・2・8 を逆順にし、偶数だけ残すと？", options: ["82", "28", "284", "842"], answer: 0 },
+  { prompt: "● ▲ ▲ ■ / ▲ ■ ● / ■ ● ?", options: ["▲", "■", "●", "◆"], answer: 0 },
+  { prompt: "「比喩」と「模型」に共通するものは？", options: ["本物を置き換えて理解を助ける", "必ず縮小する", "数字だけで表す", "結論を隠す"], answer: 0 },
+  { prompt: "「演繹」に近い説明は？", options: ["事例から規則を作る", "規則から結論を導く", "感情を記録する", "偶然を待つ"], answer: 1 },
+  { prompt: "48 - 6 × 5 + 18 ÷ 3 = ?", options: ["18", "22", "24", "30"], answer: 2 },
+  { prompt: "9・4・7・1・8 を大きい順にし、3番目と5番目を読むと？", options: ["74", "41", "71", "84"], answer: 1 },
+  { prompt: "○ ● ● △ / ● △ ○ / △ ○ ?", options: ["●", "△", "○", "□"], answer: 0 }
 ];
 
 function readStoredResult(): StoredResult | null {
@@ -179,12 +179,12 @@ export function AdmissionTestRunner() {
           <p className="mt-2 text-4xl font-bold text-ink">{finalScore}/{questions.length}</p>
           <p className="mt-2 text-sm text-ink/60">{detailValue}</p>
         </div>
-        <Link
+        <a
           href="/apply"
           className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-navy px-5 py-3 text-sm font-bold text-white transition hover:bg-navy/90 md:w-fit"
         >
           新規登録フォームに戻る
-        </Link>
+        </a>
       </div>
     );
   }
