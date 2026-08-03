@@ -19,26 +19,26 @@ const storageKey = "museion-admission-test-result";
 const secondsPerQuestion = 5;
 
 const questions: Question[] = [
-  { prompt: "2, 4, 8, 16, ?", options: ["24", "30", "32", "36"], answer: 2 },
-  { prompt: "A, C, F, J, ?", options: ["M", "N", "O", "P"], answer: 2 },
-  { prompt: "3, 6, 11, 18, ?", options: ["25", "27", "29", "31"], answer: 1 },
-  { prompt: "月 : 夜 = 太陽 : ?", options: ["朝", "昼", "星", "光"], answer: 1 },
-  { prompt: "1, 1, 2, 3, 5, ?", options: ["6", "7", "8", "9"], answer: 2 },
-  { prompt: "水は氷になる。蒸気は何になる？", options: ["水", "空気", "雲", "熱"], answer: 0 },
-  { prompt: "9, 7, 10, 8, 11, ?", options: ["7", "8", "9", "12"], answer: 2 },
-  { prompt: "本 : 読む = 音楽 : ?", options: ["描く", "聞く", "走る", "眠る"], answer: 1 },
-  { prompt: "5, 10, 20, 40, ?", options: ["60", "70", "80", "90"], answer: 2 },
-  { prompt: "Z, X, U, Q, ?", options: ["L", "M", "N", "O"], answer: 0 },
-  { prompt: "すべてのMはN。すべてのNはP。Mは？", options: ["Pである", "Pでない", "Nでない", "不明"], answer: 0 },
-  { prompt: "4, 9, 16, 25, ?", options: ["30", "32", "36", "40"], answer: 2 },
-  { prompt: "北 : 南 = 上 : ?", options: ["右", "左", "下", "中"], answer: 2 },
-  { prompt: "2, 3, 5, 8, 12, ?", options: ["15", "16", "17", "18"], answer: 2 },
-  { prompt: "鳥 : 巣 = 人 : ?", options: ["家", "道", "街", "服"], answer: 0 },
-  { prompt: "100, 50, 25, 12.5, ?", options: ["5", "6.25", "7.5", "10"], answer: 1 },
-  { prompt: "CAB, DBC, ECD, ?", options: ["FDE", "FED", "DFE", "FFE"], answer: 0 },
-  { prompt: "円に角は0。三角形に角は3。五角形は？", options: ["4", "5", "6", "7"], answer: 1 },
-  { prompt: "6, 12, 13, 26, 27, ?", options: ["28", "39", "52", "54"], answer: 3 },
-  { prompt: "原因 : 結果 = 問い : ?", options: ["仮説", "答え", "議論", "沈黙"], answer: 1 }
+  { prompt: "りんごとバナナの共通点は？", options: ["赤い", "果物", "丸い", "同じ木になる"], answer: 1 },
+  { prompt: "「慎重」に最も近い意味は？", options: ["速い", "静かな", "注意深い", "新しい"], answer: 2 },
+  { prompt: "7 - 2 + 6 = ?", options: ["9", "10", "11", "12"], answer: 2 },
+  { prompt: "3・8・1 を逆から並べると？", options: ["183", "381", "813", "831"], answer: 2 },
+  { prompt: "□ ○ □ ○ □ ?", options: ["□", "○", "△", "×"], answer: 1 },
+  { prompt: "犬と猫の共通点は？", options: ["哺乳類", "鳥類", "野菜", "道具"], answer: 0 },
+  { prompt: "「抽象」の反対に近いものは？", options: ["具体", "高速", "遠方", "単独"], answer: 0 },
+  { prompt: "18 ÷ 3 + 4 = ?", options: ["8", "9", "10", "11"], answer: 2 },
+  { prompt: "6・1・9・4 を小さい順に並べると？", options: ["1469", "1946", "4619", "9641"], answer: 0 },
+  { prompt: "A B D G K ?", options: ["L", "M", "N", "O"], answer: 3 },
+  { prompt: "時計と定規の共通点は？", options: ["測る道具", "食べ物", "乗り物", "植物"], answer: 0 },
+  { prompt: "「暫定」に最も近い意味は？", options: ["永久の", "一時的な", "巨大な", "透明な"], answer: 1 },
+  { prompt: "5個入りを4箱買うと何個？", options: ["9", "16", "20", "25"], answer: 2 },
+  { prompt: "2・7・4 を逆から並べると？", options: ["247", "274", "427", "472"], answer: 3 },
+  { prompt: "△ △ ○ △ △ ○ ?", options: ["△", "○", "□", "×"], answer: 0 },
+  { prompt: "雨と雪の共通点は？", options: ["天気", "金属", "楽器", "数字"], answer: 0 },
+  { prompt: "「推論」に最も近いものは？", options: ["眠ること", "考えて導くこと", "色を塗ること", "物を運ぶこと"], answer: 1 },
+  { prompt: "12 + 15 - 7 = ?", options: ["18", "19", "20", "21"], answer: 2 },
+  { prompt: "9・3・8・2 を大きい順に並べると？", options: ["9823", "9382", "8932", "2398"], answer: 0 },
+  { prompt: "● ○ ○ ● ○ ○ ?", options: ["●", "○", "△", "□"], answer: 0 }
 ];
 
 function readStoredResult(): StoredResult | null {
@@ -101,8 +101,6 @@ export function AdmissionTestRunner() {
   const [timeLeft, setTimeLeft] = useState(secondsPerQuestion);
   const [correct, setCorrect] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
-  const [answered, setAnswered] = useState(false);
 
   const question = questions[current];
   const progress = ((current + 1) / questions.length) * 100;
@@ -121,7 +119,7 @@ export function AdmissionTestRunner() {
     setPhase("done");
   }, []);
 
-  const goNext = useCallback((choice: number | null = selected) => {
+  const goNext = useCallback((choice: number | null = null) => {
     const nextCorrect = correct + (choice === question.answer ? 1 : 0);
     if (current + 1 >= questions.length) {
       finish(nextCorrect);
@@ -130,9 +128,7 @@ export function AdmissionTestRunner() {
     setCorrect(nextCorrect);
     setCurrent((value) => value + 1);
     setTimeLeft(secondsPerQuestion);
-    setSelected(null);
-    setAnswered(false);
-  }, [correct, current, finish, question.answer, selected]);
+  }, [correct, current, finish, question.answer]);
 
   useEffect(() => {
     if (phase !== "testing") return;
@@ -154,7 +150,7 @@ export function AdmissionTestRunner() {
       <div className="grid gap-5">
         <div className="rounded-md border border-gold/25 bg-gold/10 p-5 text-sm leading-7 text-ink/75">
           <span className="font-bold text-ink">開始前の注意:</span> 全20問、1問あたり5秒です。開始後はタイマーが止まりません。
-          回答を選んだら「次の問題へ」で進みます。時間切れの場合は未回答として自動的に次へ進みます。
+          言語理解、作動記憶、算数、系列推理、視覚的パターンを短時間で見ます。回答を選ぶとすぐ次の問題へ進みます。
         </div>
         <div className="grid gap-3 text-sm text-ink/65 md:grid-cols-3">
           <div className="rounded-md border border-line bg-smoke p-4"><span className="block text-lg font-bold text-ink">20問</span>短時間の推論問題</div>
@@ -210,32 +206,14 @@ export function AdmissionTestRunner() {
           <button
             key={option}
             type="button"
-            disabled={answered}
-            onClick={() => {
-              setSelected(index);
-              setAnswered(true);
-            }}
-            className={`min-h-14 rounded-md border px-4 py-3 text-left text-sm font-semibold transition ${
-              selected === index
-                ? "border-gold bg-gold/15 text-ink"
-                : "border-line bg-smoke text-ink hover:border-navy/30 hover:bg-white"
-            }`}
+            onClick={() => goNext(index)}
+            className="min-h-14 rounded-md border border-line bg-smoke px-4 py-3 text-left text-sm font-semibold text-ink transition hover:border-navy/30 hover:bg-white"
           >
             {option}
           </button>
         ))}
       </div>
-      <div className="mt-5 flex items-center justify-between gap-3">
-        <p className="text-xs text-ink/50">{answered ? "回答を記録しました。次へ進んでください。" : "選択すると回答が固定されます。"}</p>
-        <button
-          type="button"
-          onClick={() => goNext()}
-          disabled={!answered}
-          className="inline-flex min-h-10 items-center justify-center rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          次の問題へ
-        </button>
-      </div>
+      <p className="mt-5 text-xs text-ink/50">選択した瞬間に回答が記録され、次の問題へ進みます。</p>
     </div>
   );
 }
