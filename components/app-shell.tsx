@@ -38,6 +38,7 @@ export function AppShell({ profile, children }: { profile: Profile; children: Re
             <div className="font-bold">{profile.display_name || "メンバー"}</div>
             <div className="mt-1 text-xs text-ink/55">{profile.user_type || "学び続ける人"}</div>
           </div>
+          <Link href="/contact" className="mb-3 block text-sm underline">運営へのお問い合わせ</Link>
           <form action={signOut}>
             <Button variant="ghost" className="w-full justify-start">
               <LogOut size={16} /> ログアウト

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./support-contact.css";
 
 export const metadata: Metadata = {
   title: "MUSEION Gate",
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>{children}<footer className="business-support-footer-link"><a href="/contact">運営へのお問い合わせ</a></footer></body>
     </html>
   );
 }
